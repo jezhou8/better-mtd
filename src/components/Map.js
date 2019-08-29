@@ -8,18 +8,12 @@ class Map extends React.Component {
 		super(props);
 	}
 
-	//WARNING! To be deprecated in React v17. Use componentDidUpdate instead.
-	componentWillUpdate(nextProps, nextState) {
-		console.log(nextProps.busStops);
-	}
-
 	render() {
 		let { region, busStops } = this.props;
 		return (
 			<MapView region={region} style={styles.map} showsUserLocation>
 				{busStops &&
 					busStops.map(stop => {
-						console.log("stop: ", stop);
 						return (
 							<MapView.Marker
 								key={stop.id}

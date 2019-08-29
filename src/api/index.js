@@ -9,3 +9,11 @@ export async function getStopsByLatLong(lat, long, count = 5) {
 	let data = await response.json();
 	return data.stops;
 }
+
+export async function getStopTimesByStop(stopId) {
+	const method = "getStopTimesByStop";
+	const url = `https://developer.cumtd.com/api/${CONFIG.VERSION}/${CONFIG.FORMAT}/${method}?key=${CONFIG.API_KEY}`;
+	let response = await fetch(url + `&stop_id=${stopId}`);
+	let data = await response.json();
+	return data.stop_times;
+}

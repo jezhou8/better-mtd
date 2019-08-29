@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, Alert } from "react-native";
 import Map from "./src/components/Map";
 import Card from "./src/components/Card";
 import * as Location from "expo-location";
-import { getStopsByLatLong } from "./src/api/index";
+import * as Permissions from "expo-permissions";
+
+import { getStopsByLatLong, getStopTimesByStop } from "./src/api/index";
 
 class App extends React.Component {
 	state = {
@@ -17,13 +19,14 @@ class App extends React.Component {
 	};
 
 	findCoordinates = async () => {
-		let location = await Location.getCurrentPositionAsync({});
+		let { status } = await Permissions.askAsync(Permissions.LOCATION);
+		if (status !== "granted") {
+			this.setState({
+				errorMessage: "Permission to access location was denied",
+			});
+		}
 
-		let stops = await getStopsByLatLong(
-			location.coords.latitude,
-			location.coords.longitude,
-			25
-		);
+		let location = await Location.getCurrentPositionAsync({});
 
 		this.setState({
 			...this.state,
@@ -32,19 +35,35 @@ class App extends React.Component {
 				latitude: location.coords.latitude,
 				longitude: location.coords.longitude,
 			},
-			busStops: this.parseStops(stops),
 		});
+
+		this.calcualteStops();
 	};
 
+	calcualteStops = async () => {
+		let stops = await getStopsByLatLong(
+			this.state.location.latitude,
+			this.state.location.longitude,
+			2
+		);
+
+		let formattedStops = await this.parseStops(stops);
+
+		this.setState({
+			...this.state,
+			busStops: formattedStops,
+		});
+	};
 	componentDidMount() {
 		this.findCoordinates();
 	}
 
-	parseStops(stops) {
+	parseStops = async stops => {
 		let formattedStops = [];
 		for (let i = 0; i < stops.length; i++) {
 			let currStop = stops[i];
 
+			// calculate location of bus stop
 			let avgStopLat = 0;
 			let avgStopLong = 0;
 			for (let j = 0; j < currStop.stop_points.length; j++) {
@@ -56,19 +75,35 @@ class App extends React.Component {
 			avgStopLat /= currStop.stop_points.length;
 			avgStopLong /= currStop.stop_points.length;
 
+			// calculate incoming bus etas for stop
+			let stopId = currStop.stop_id;
+			let stopTimes = await getStopTimesByStop(stopId);
+
+			let fStopTimes = [];
+
+			//console.log("first: ", stopTimes[0]);
+			for (let k = 0; k < stopTimes.length; k++) {
+				let stopTime = stopTimes[k];
+				fStopTimes.push({
+					busId: stopTime.trip.shape_id,
+					arrivalTime: stopTime.arrival_time,
+				});
+			}
+
+			// create and add stop to list
 			let newStop = {
-				id: currStop.stop_id,
+				id: stopId,
 				name: currStop.stop_name,
 				location: {
 					latitude: avgStopLat,
 					longitude: avgStopLong,
 				},
+				busTimes: fStopTimes,
 			};
-
 			formattedStops.push(newStop);
 		}
 		return formattedStops;
-	}
+	};
 
 	render() {
 		return (
@@ -81,7 +116,7 @@ class App extends React.Component {
 				</View>
 
 				<View style={styles.cardContainer}>
-					<Card></Card>
+					<Card busStops={this.state.busStops}></Card>
 				</View>
 
 				<View style={styles.navbarContainer}></View>
@@ -105,7 +140,7 @@ const styles = StyleSheet.create({
 	cardContainer: {
 		width: "100%",
 		height: "50%",
-		backgroundColor: "#fff",
+		backgroundColor: "#f00",
 	},
 	navbarContainer: {
 		position: "absolute",
