@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { View, ScrollView, Text, StyleSheet } from "react-native";
 import BusTag from "./BusTag";
+import StopLabel from "./StopLabel";
+
 class Card extends Component {
 	state = {
 		time: Date.now(),
@@ -10,25 +12,28 @@ class Card extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		this.getCurrentTime();
+		if (prevProps != this.props) {
+			this.getCurrentTime();
+		}
 	}
 
 	getCurrentTime() {
-		console.log("new time: ", Date.now());
-		this.state({ time: Date.now() });
+		console.log("new time: ", new Date().getMinutes());
+		this.setState({ time: new Date() });
 	}
 
 	render() {
 		let { busStops } = this.props;
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				{busStops &&
-					busStops.map(busStop =>
-						busStop.busTimes.map(busTime => (
-							<BusTag arrivalTime={busTime.arrivalTime}></BusTag>
-						))
-					)}
-			</View>
+					busStops.map(busStop => (
+						<StopLabel
+							currentTime={this.state.time}
+							busStop={busStop}
+						/>
+					))}
+			</ScrollView>
 		);
 	}
 }
