@@ -11,7 +11,11 @@ import { Provider } from "react-redux";
 import store from "./src/redux/store";
 
 import { getStopsByLatLong, getStopTimesByStop } from "./src/api/index";
-import { NAVBAR_HEIGHT } from "./src/constants";
+import {
+	NAVBAR_HEIGHT,
+	LATITUDE_DELTA,
+	LONGITUDE_DELTA,
+} from "./src/constants";
 
 class App extends React.Component {
 	state = {
@@ -87,7 +91,6 @@ class App extends React.Component {
 
 			let fStopTimes = [];
 
-			//console.log("first: ", stopTimes[0]);
 			for (let k = 0; k < stopTimes.length; k++) {
 				let stopTime = stopTimes[k];
 				fStopTimes.push({
@@ -159,6 +162,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-const LATITUDE_DELTA = 0.002;
-const LONGITUDE_DELTA = 0.0018;
 export default App;

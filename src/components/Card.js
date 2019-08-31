@@ -29,12 +29,10 @@ class Card extends Component {
 	}
 
 	getCurrentTime() {
-		console.log("new time: ", new Date().getMinutes());
 		this.setState({ time: new Date() });
 	}
 
 	toggle = () => {
-		//console.log("this.props.expanded ", this.props.expanded);
 		this.state.animation.setValue(this.props.expanded); //Step 3
 		Animated.spring(
 			//Step 4
@@ -46,8 +44,7 @@ class Card extends Component {
 	};
 
 	render() {
-		let { busStops, toggleCardSize, expanded } = this.props;
-		console.log(expanded);
+		let { busStops, toggleCardSize } = this.props;
 		return (
 			<Animated.View
 				style={{
