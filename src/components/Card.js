@@ -24,11 +24,13 @@ class Card extends Component {
 
 	render() {
 		let { busStops } = this.props;
+		console.log(this.props);
 		return (
 			<ScrollView style={styles.container}>
 				{busStops &&
-					busStops.map(busStop => (
+					busStops.map((busStop, index) => (
 						<StopLabel
+							key={index}
 							currentTime={this.state.time}
 							busStop={busStop}
 						/>

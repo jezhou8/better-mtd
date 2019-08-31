@@ -1,9 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import Map from "./src/components/Map";
-import Card from "./src/components/Card";
+import Card from "./src/containers/cardCTS";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+
+// redux imports
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 import { getStopsByLatLong, getStopTimesByStop } from "./src/api/index";
 
@@ -107,20 +111,22 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
-				<View style={styles.mapContainer}>
-					<Map
-						region={this.state.location}
-						busStops={this.state.busStops}
-					></Map>
-				</View>
+			<Provider store={store}>
+				<View style={styles.container}>
+					<View style={styles.mapContainer}>
+						<Map
+							region={this.state.location}
+							busStops={this.state.busStops}
+						></Map>
+					</View>
 
-				<View style={styles.cardContainer}>
-					<Card busStops={this.state.busStops}></Card>
-				</View>
+					<View style={styles.cardContainer}>
+						<Card busStops={this.state.busStops}></Card>
+					</View>
 
-				<View style={styles.navbarContainer}></View>
-			</View>
+					<View style={styles.navbarContainer}></View>
+				</View>
+			</Provider>
 		);
 	}
 }

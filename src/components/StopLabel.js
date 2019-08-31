@@ -8,20 +8,20 @@ class StopLabel extends Component {
 		this.state = {};
 	}
 
-	convertToETA = (currentTime, arrivalTime) => {
-		console.log("hello!");
-		let fArrivalTime = new Date("1970-01-01T" + arrivalTime + "Z");
-		let minutesTill = fArrivalTime.getMinutes();
-		let hoursTill = fArrivalTime.getHours();
+	// convertToETA = (currentTime, arrivalTime) => {
+	// 	console.log("hello!");
+	// 	let fArrivalTime = new Date("1970-01-01T" + arrivalTime + "Z");
+	// 	let minutesTill = fArrivalTime.getMinutes();
+	// 	let hoursTill = fArrivalTime.getHours();
 
-		let currMinutes = currentTime.getMinutes();
+	// 	let currMinutes = currentTime.getMinutes();
 
-		if (hoursTill == currentTime.getHours()) {
-			return minutesTill - currMinutes;
-		}
+	// 	if (hoursTill == currentTime.getHours()) {
+	// 		return minutesTill - currMinutes;
+	// 	}
 
-		return minutesTill + (60 - currMinutes);
-	};
+	// 	return minutesTill + (60 - currMinutes);
+	// };
 
 	render() {
 		let { busStop, currentTime } = this.props;
@@ -32,20 +32,19 @@ class StopLabel extends Component {
 				<ScrollView>
 					{busStop.busTimes &&
 						busStop.busTimes.map((busTime, index) => {
-							let eta = this.convertToETA(
+							{
+								/* let eta = this.convertToETA(
 								currentTime,
 								busTime.arrivalTime
-							);
-							if (eta > 0 && eta < 20) {
-								console.log(eta);
-								return (
-									<BusTag
-										key={index}
-										busId={busTime.busId}
-										eta={eta}
-									></BusTag>
-								);
+							); */
 							}
+							return (
+								<BusTag
+									key={index}
+									busId={busTime.busId}
+									// eta={eta}
+								></BusTag>
+							);
 						})}
 				</ScrollView>
 			</View>
