@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
-import Map from "./src/components/Map";
+import Map from "./src/containers/mapCTS";
 import Card from "./src/containers/cardCTS";
+
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
@@ -10,6 +11,7 @@ import { Provider } from "react-redux";
 import store from "./src/redux/store";
 
 import { getStopsByLatLong, getStopTimesByStop } from "./src/api/index";
+import { NAVBAR_HEIGHT } from "./src/constants";
 
 class App extends React.Component {
 	state = {
@@ -113,14 +115,14 @@ class App extends React.Component {
 		return (
 			<Provider store={store}>
 				<View style={styles.container}>
-					<View style={styles.mapContainer}>
+					<View style={styles.contentContainer}>
 						<Map
 							region={this.state.location}
 							busStops={this.state.busStops}
 						></Map>
-					</View>
 
-					<Card busStops={this.state.busStops}></Card>
+						<Card></Card>
+					</View>
 
 					<View style={styles.navbarContainer}></View>
 				</View>
@@ -133,8 +135,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#f0f",
-		alignItems: "center",
 		// justifyContent: "center",
+	},
+	contentContainer: {
+		flex: 1,
 	},
 	mapContainer: {
 		width: "100%",
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
 	navbarContainer: {
 		position: "absolute",
 		width: "100%",
-		height: "10%",
+		height: NAVBAR_HEIGHT,
 		bottom: 0,
 		backgroundColor: "#00f",
 	},

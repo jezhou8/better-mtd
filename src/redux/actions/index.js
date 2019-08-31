@@ -3,7 +3,7 @@ import {
 	CREATE_EVENT,
 	FORM_DATA_CHANGED,
 	CLEAR_FORM,
-	EXPAND_CARD,
+	TOGGLE_CARD_SIZE,
 	HIDE_CARD,
 	LOAD_CARD_DATA,
 	RSVP_EVENT,
@@ -27,5 +27,11 @@ export function setDefaultLocation() {
 	return {
 		type: FETCH_LOCATION,
 		payload: getLocationAsync(),
+	};
+}
+
+export function toggleCardSize() {
+	return {
+		type: TOGGLE_CARD_SIZE,
 	};
 }

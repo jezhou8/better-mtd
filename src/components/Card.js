@@ -2,19 +2,16 @@ import React, { Component } from "react";
 import {
 	View,
 	ScrollView,
-	Text,
 	StyleSheet,
 	Animated,
 	TouchableOpacity,
 } from "react-native";
-import BusTag from "./BusTag";
 import StopLabel from "./StopLabel";
-import { TrackingConfigurations } from "expo/build/AR";
+import { NAVBAR_HEIGHT } from "../constants";
 
 class Card extends Component {
 	state = {
 		time: Date.now(),
-		expanded: 1,
 		animation: new Animated.Value(1),
 	};
 	constructor(props) {
@@ -24,6 +21,10 @@ class Card extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps != this.props) {
 			this.getCurrentTime();
+
+			if (this.props.expanded != prevProps.expanded) {
+				this.toggle();
+			}
 		}
 	}
 
@@ -32,36 +33,21 @@ class Card extends Component {
 		this.setState({ time: new Date() });
 	}
 
-	_setMaxHeight = event => {
-		console.log("max height: ", event.nativeEvent.layout.height);
-		this.setState({
-			...this.state,
-			maxHeight: event.nativeEvent.layout.height,
-		});
-	};
-
 	toggle = () => {
-		//Step 1
-
-		console.log("expanded? ", this.state.expanded);
-		console.log();
-
-		this.state.animation.setValue(this.state.expanded); //Step 3
+		//console.log("this.props.expanded ", this.props.expanded);
+		this.state.animation.setValue(this.props.expanded); //Step 3
 		Animated.spring(
 			//Step 4
 			this.state.animation,
 			{
-				toValue: !this.state.expanded,
+				toValue: !this.props.expanded,
 			}
-		).start(); //Step 5
-		this.setState({
-			...this.state,
-			expanded: this.state.expanded ? 0 : 1, //Step 2
-		});
+		).start();
 	};
 
 	render() {
-		let { busStops } = this.props;
+		let { busStops, toggleCardSize, expanded } = this.props;
+		console.log(expanded);
 		return (
 			<Animated.View
 				style={{
@@ -71,9 +57,11 @@ class Card extends Component {
 						outputRange: ["10%", "50%"],
 					}),
 					backgroundColor: "#00f",
+					position: "absolute",
+					bottom: NAVBAR_HEIGHT,
 				}}
 			>
-				<TouchableOpacity onPress={() => this.toggle()}>
+				<TouchableOpacity onPress={() => toggleCardSize()}>
 					<View style={styles.collapseBar}></View>
 				</TouchableOpacity>
 				<ScrollView style={styles.container}>
