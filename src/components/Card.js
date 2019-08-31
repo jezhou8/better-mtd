@@ -5,9 +5,11 @@ import {
 	StyleSheet,
 	Animated,
 	TouchableOpacity,
+	Platform,
 } from "react-native";
+import { SearchBar } from "react-native-elements";
 import StopLabel from "./StopLabel";
-import { NAVBAR_HEIGHT } from "../constants";
+import { NAVBAR_HEIGHT, LIGHT_GRAY } from "../constants";
 
 class Card extends Component {
 	state = {
@@ -44,14 +46,14 @@ class Card extends Component {
 	};
 
 	render() {
-		let { busStops, toggleCardSize } = this.props;
+		let { busStops, toggleCardSize, expandCardSize } = this.props;
 		return (
 			<Animated.View
 				style={{
 					width: "100%",
 					height: this.state.animation.interpolate({
 						inputRange: [0, 1],
-						outputRange: ["10%", "50%"],
+						outputRange: ["10%", "60%"],
 					}),
 					backgroundColor: "#00f",
 					position: "absolute",
@@ -61,6 +63,12 @@ class Card extends Component {
 				<TouchableOpacity onPress={() => toggleCardSize()}>
 					<View style={styles.collapseBar}></View>
 				</TouchableOpacity>
+				<SearchBar
+					placeholder={"Enter destination"}
+					containerStyle={styles.searchContainer}
+					onFocus={() => expandCardSize()}
+					platform={Platform.OS}
+				></SearchBar>
 				<ScrollView style={styles.container}>
 					{busStops &&
 						busStops.map((busStop, index) => (
@@ -83,11 +91,30 @@ const styles = StyleSheet.create({
 	cardContainer: {
 		width: "100%",
 		height: "50%",
-		backgroundColor: "#f00",
+		backgroundColor: LIGHT_GRAY,
 	},
 	collapseBar: {
-		backgroundColor: "#f00",
+		backgroundColor: LIGHT_GRAY,
 		width: "100%",
-		height: 30,
+		height: 10,
+		borderTopLeftRadius: 5,
+		borderTopRightRadius: 5,
+		position: "absolute",
+		bottom: "100%",
+
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: -1,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 1.41,
+
+		elevation: 2,
+	},
+	searchContainer: {
+		backgroundColor: LIGHT_GRAY,
+		borderBottomWidth: 1,
+		borderBottomColor: "#eee",
 	},
 });

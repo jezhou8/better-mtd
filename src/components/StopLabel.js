@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { FlatGrid, SectionGrid } from "react-native-super-grid";
 import BusTag from "./BusTag";
-
+import { LIGHT_GRAY } from "../constants";
+import { Col, Row, Grid } from "react-native-easy-grid";
 class StopLabel extends Component {
 	constructor(props) {
 		super(props);
@@ -25,28 +27,59 @@ class StopLabel extends Component {
 
 	render() {
 		let { busStop, currentTime } = this.props;
+		let busTimes = busStop.busTimes;
 		return (
 			<View style={styles.labelContainer}>
-				{busStop && <Text>{busStop.name}</Text>}
-
-				<ScrollView>
-					{busStop.busTimes &&
-						busStop.busTimes.map((busTime, index) => {
-							{
-								/* let eta = this.convertToETA(
-								currentTime,
-								busTime.arrivalTime
-							); */
-							}
-							return (
-								<BusTag
-									key={index}
-									busId={busTime.busId}
-									// eta={eta}
-								></BusTag>
-							);
-						})}
-				</ScrollView>
+				<View style={styles.stopInfoContainer}>
+					<View style={styles.stopNumber}>
+						<Text style={styles.stopNumberText}>1</Text>
+					</View>
+				</View>
+				<View style={styles.busInfoContainer}>
+					{busStop && (
+						<Text style={{ fontSize: 17, paddingVertical: 5 }}>
+							{busStop.name}
+						</Text>
+					)}
+					<Grid>
+						<Col style={{ width: "33%" }}>
+							<Row>
+								{busTimes[0] && (
+									<BusTag busInfo={busTimes[0]}></BusTag>
+								)}
+							</Row>
+							<Row>
+								{busTimes[1] && (
+									<BusTag busInfo={busTimes[1]}></BusTag>
+								)}
+							</Row>
+						</Col>
+						<Col style={{ width: "33%" }}>
+							<Row>
+								{busTimes[2] && (
+									<BusTag busInfo={busTimes[2]}></BusTag>
+								)}
+							</Row>
+							<Row>
+								{busTimes[3] && (
+									<BusTag busInfo={busTimes[3]}></BusTag>
+								)}
+							</Row>
+						</Col>
+						<Col style={{ width: "33%" }}>
+							<Row>
+								{busTimes[4] && (
+									<BusTag busInfo={busTimes[4]}></BusTag>
+								)}
+							</Row>
+							<Row>
+								{busTimes[5] && (
+									<BusTag busInfo={busTimes[5]}></BusTag>
+								)}
+							</Row>
+						</Col>
+					</Grid>
+				</View>
 			</View>
 		);
 	}
@@ -56,10 +89,37 @@ export default StopLabel;
 
 const styles = StyleSheet.create({
 	labelContainer: {
+		flexDirection: "row",
 		width: "100%",
-		height: 100,
-		backgroundColor: "#0ff",
+		height: 110,
+		backgroundColor: LIGHT_GRAY,
 		marginBottom: 2,
-		padding: 5,
+		borderBottomWidth: 1,
+		borderBottomColor: "#eee",
+		paddingBottom: 10,
+	},
+	busInfoContainer: {
+		width: "80%",
+		flexDirection: "column",
+		justifyContent: "space-between",
+	},
+	stopInfoContainer: {
+		width: "20%",
+		alignItems: "center",
+
+		justifyContent: "center",
+	},
+	stopNumber: {
+		width: "50%",
+		aspectRatio: 1,
+		backgroundColor: "#FF7700",
+		borderRadius: 10,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	stopNumberText: {
+		fontSize: 34,
+		color: "#fff",
+		fontWeight: "bold",
 	},
 });

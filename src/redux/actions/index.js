@@ -8,6 +8,8 @@ import {
 	LOAD_CARD_DATA,
 	RSVP_EVENT,
 	FILTER_EVENT,
+	EXPAND_CARD_SIZE,
+	COLLAPSE_CARD_SIZE,
 } from "./ActionTypes";
 import * as Location from "expo-location";
 
@@ -33,5 +35,17 @@ export function setDefaultLocation() {
 export function toggleCardSize() {
 	return {
 		type: TOGGLE_CARD_SIZE,
+	};
+}
+
+export function expandCardSize() {
+	return {
+		type: EXPAND_CARD_SIZE,
+	};
+}
+
+export function collapseCardSize() {
+	return {
+		type: COLLAPSE_CARD_SIZE,
 	};
 }
