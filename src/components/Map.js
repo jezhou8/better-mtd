@@ -36,12 +36,13 @@ class Map extends React.Component {
 			<Animated.View
 				style={{
 					width: "100%",
-					height: "40%",
+					height: "35%",
 					height: this.state.animation.interpolate({
 						inputRange: [0, 1],
-						outputRange: ["80%", "40%"],
+						outputRange: ["85%", "35%"],
 					}),
 					backgroundColor: "#0f0",
+					position: "absolute",
 				}}
 			>
 				<MapView

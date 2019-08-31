@@ -118,14 +118,12 @@ class App extends React.Component {
 		return (
 			<Provider store={store}>
 				<View style={styles.container}>
-					<View style={styles.contentContainer}>
-						<Map
-							region={this.state.location}
-							busStops={this.state.busStops}
-						></Map>
+					<Map
+						region={this.state.location}
+						busStops={this.state.busStops}
+					></Map>
 
-						<Card></Card>
-					</View>
+					<Card></Card>
 
 					<View style={styles.navbarContainer}></View>
 				</View>
@@ -141,12 +139,7 @@ const styles = StyleSheet.create({
 		// justifyContent: "center",
 	},
 	contentContainer: {
-		flex: 1,
-	},
-	mapContainer: {
 		width: "100%",
-		height: "40%",
-		backgroundColor: "#0f0",
 	},
 	cardContainer: {
 		width: "100%",

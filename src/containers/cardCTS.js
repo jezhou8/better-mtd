@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Card from "../components/Card";
-import { toggleCardSize } from "../redux/actions";
+import { toggleCardSize, expandCardSize } from "../redux/actions";
 
 const mapStateToProps = state => ({
 	// location: state.map,
@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => {
 		// onFormDataChange: values => dispatch(onFormDataChange(values)),
 		// clearForm: () => dispatch(clearForm()),
 		toggleCardSize: () => dispatch(toggleCardSize()),
+		expandCardSize: () => dispatch(expandCardSize()),
 	};
 };
 
