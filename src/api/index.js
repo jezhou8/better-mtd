@@ -31,7 +31,7 @@ export function getStopTimesByStop(stopId) {
 		fetch(url + `&stop_id=${stopId}`)
 			.then(response => response.json())
 			.then(responseJson => {
-				console.log("busTimes found: ", responseJson.stop_times);
+				console.log("busTimes found: ");
 				return resolve(responseJson.stop_times);
 			});
 	});

@@ -11,20 +11,18 @@ const initialState = {
 
 export default function StopsReducer(state = initialState, action) {
 	switch (action.type) {
-		case FETCH_STOPS_FULFILLED: {
+		case FETCH_STOPS_FULFILLED:
 			return {
 				...state,
 				stops: action.payload,
 			};
-		}
 
-		case FETCH_BUS_TIMES_FULFILLED: {
-			state.stops.find(stop => stop.stop_id === action.payload.stop_id);
+		case FETCH_BUS_TIMES_FULFILLED:
 			return {
 				...state,
-				busTimes: action.payload,
+				busTimes: state.busTimes.concat(action.payload),
 			};
-		}
+
 		default:
 			return state;
 	}

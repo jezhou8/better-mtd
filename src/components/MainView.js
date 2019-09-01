@@ -13,14 +13,17 @@ class MainView extends Component {
 	componentDidMount() {
 		let lat = 40.104585872069094;
 		let long = -88.23382370182148;
-		this.props.findStopsNearLatLong(lat, long, 1);
+		this.props.findStopsNearLatLong(lat, long, 2);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.busStops != this.props.busStops) {
-			this.props.busStops.map(busStop => {
+		let { busStops } = this.props;
+		if (prevProps.busStops != busStops) {
+			for (let i = 0; i < busStops.length; i++) {
+				let busStop = busStops[i];
+				console.log("stops are updated, ", busStop.stop_id);
 				this.props.findStopTimesByStopId(busStop.stop_id);
-			});
+			}
 		}
 	}
 

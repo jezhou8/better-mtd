@@ -11,6 +11,7 @@ import {
 	FILTER_EVENT,
 	EXPAND_CARD_SIZE,
 	COLLAPSE_CARD_SIZE,
+	FETCH_BUS_TIMES,
 } from "./ActionTypes";
 import * as Location from "expo-location";
 import { getStopsByLatLong, getStopTimesByStop } from "../../api/index";
@@ -43,7 +44,7 @@ export function findStopsNearLatLong(lat, long, count) {
 
 export function findStopTimesByStopId(stop_id) {
 	return {
-		type: FETCH_STOPS,
+		type: FETCH_BUS_TIMES,
 		payload: getStopTimesByStop(stop_id),
 	};
 }

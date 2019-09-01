@@ -6,6 +6,7 @@ const mapStateToProps = state => ({
 	// location: state.map,
 	// formData: state.formData,
 	busStops: state.busStops.stops,
+	busTimes: state.busStops.busTimes,
 	expanded: state.settings.expanded,
 });
 

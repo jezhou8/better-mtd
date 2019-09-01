@@ -46,8 +46,8 @@ class Card extends Component {
 	};
 
 	render() {
-		let { busStops, toggleCardSize, expandCardSize } = this.props;
-		console.log("busStops: ", busStops.length);
+		let { busStops, toggleCardSize, expandCardSize, busTimes } = this.props;
+		console.log("busTimes.length: ", busTimes.length);
 		return (
 			<Animated.View
 				style={{
@@ -78,6 +78,7 @@ class Card extends Component {
 								key={busStop.stop_id}
 								currentTime={this.state.time}
 								busStop={busStop}
+								busTimes={busTimes}
 							/>
 						))}
 				</ScrollView>

@@ -4,7 +4,6 @@ import { LIGHT_GRAY, YELLOW, GOLD, PURPLE } from "../constants";
 
 class BusTag extends Component {
 	setTagColor = busName => {
-		console.log(busName);
 		if (busName.includes("100")) {
 			return YELLOW;
 		}
@@ -20,8 +19,31 @@ class BusTag extends Component {
 		return "#fff";
 	};
 
+	setBusNumber = (routeId, direction) => {
+		routeId = routeId.toLowerCase();
+		let number = 0;
+		direction = direction.charAt(0);
+		if (routeId.includes("brown")) {
+			number = 9;
+		} else if (routeId.includes("gold")) {
+			number = 10;
+		} else if (routeId.includes("yellow")) {
+			number = 1;
+		} else if (routeId.includes("illini")) {
+			number = 22;
+		} else if (routeId.includes("green")) {
+			number = 5;
+		} else if (routeId.includes("silver")) {
+			number = 13;
+		} else {
+			number = 69;
+		}
+		return "" + number + direction;
+	};
+
 	render() {
-		let { busName, eta } = this.props.busInfo;
+		let { trip } = this.props.busInfo;
+		let busNumber = this.setBusNumber(trip.route_id, trip.direction);
 		return (
 			<View
 				style={{
@@ -38,13 +60,13 @@ class BusTag extends Component {
 					style={{
 						borderTopLeftRadius: 5,
 						borderBottomLeftRadius: 5,
-						backgroundColor: this.setTagColor(busName),
+						backgroundColor: this.setTagColor(busNumber),
 						width: "45%",
 						justifyContent: "center",
 						alignItems: "center",
 					}}
 				>
-					<Text adjustsFontSizeToFit>{busName}</Text>
+					<Text adjustsFontSizeToFit>{busNumber}</Text>
 				</View>
 				<View
 					style={{

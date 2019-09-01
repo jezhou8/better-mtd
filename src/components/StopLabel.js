@@ -26,9 +26,9 @@ class StopLabel extends Component {
 	// };
 
 	render() {
-		let { busStop, currentTime, index } = this.props;
-		console.log("stop name: ", busStop);
-		let busTimes = busStop.busTimes;
+		let { busStop, currentTime, index, busTimes } = this.props;
+
+		console.log(busTimes.length);
 		return (
 			<View style={styles.labelContainer}>
 				<View style={styles.stopInfoContainer}>
