@@ -57,12 +57,17 @@ class Map extends React.Component {
 					showsUserLocation
 				>
 					{busStops &&
-						busStops.map(stop => {
+						busStops.map(busStop => {
 							return (
 								<MapView.Marker
-									key={stop.id}
-									coordinate={stop.location}
-									title={stop.name}
+									key={busStop.stop_id}
+									coordinate={{
+										latitude:
+											busStop.stop_points[0].stop_lat,
+										longitude:
+											busStop.stop_points[0].stop_lon,
+									}}
+									title={busStop.stop_name}
 								/>
 							);
 						})}

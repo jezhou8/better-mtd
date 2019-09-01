@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import stops from "./StopsReducer";
+import busStops from "./StopsReducer";
 import map from "./MapReducer";
 import settings from "./SettingsReducer";
 
 const rootReducer = combineReducers({
-	stops,
+	busStops,
 	settings,
+	map,
 });
 
 export default rootReducer;

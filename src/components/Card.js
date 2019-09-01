@@ -47,6 +47,7 @@ class Card extends Component {
 
 	render() {
 		let { busStops, toggleCardSize, expandCardSize } = this.props;
+		console.log("busStops: ", busStops.length);
 		return (
 			<Animated.View
 				style={{
@@ -73,7 +74,8 @@ class Card extends Component {
 					{busStops &&
 						busStops.map((busStop, index) => (
 							<StopLabel
-								key={index}
+								index={index + 1}
+								key={busStop.stop_id}
 								currentTime={this.state.time}
 								busStop={busStop}
 							/>

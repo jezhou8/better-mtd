@@ -5,8 +5,9 @@ import { toggleCardSize } from "../redux/actions";
 const mapStateToProps = state => ({
 	// location: state.map,
 	// formData: state.formData,
-	busStops: state.stops,
+	busStops: state.busStops.stops,
 	expanded: state.settings.expanded,
+	region: state.map.region,
 });
 
 const mapDispatchToProps = dispatch => {

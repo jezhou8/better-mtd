@@ -1,7 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
-import Map from "./src/containers/mapCTS";
-import Card from "./src/containers/cardCTS";
 
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -16,6 +14,7 @@ import {
 	LATITUDE_DELTA,
 	LONGITUDE_DELTA,
 } from "./src/constants";
+import MainView from "./src/containers/mainCTS";
 
 class App extends React.Component {
 	state = {
@@ -46,26 +45,26 @@ class App extends React.Component {
 				longitude: location.coords.longitude,
 			},
 		});
-
-		this.calcualteStops();
+		// this.calcualteStops();
 	};
 
-	calcualteStops = async () => {
-		let stops = await getStopsByLatLong(
-			this.state.location.latitude,
-			this.state.location.longitude,
-			2
-		);
+	// calcualteStops = async () => {
+	// 	let stops = await getStopsByLatLong(
+	// 		this.state.location.latitude,
+	// 		this.state.location.longitude,
+	// 		2
+	// 	);
 
-		let formattedStops = await this.parseStops(stops);
+	// 	let formattedStops = await this.parseStops(stops);
 
-		this.setState({
-			...this.state,
-			busStops: formattedStops,
-		});
-	};
+	// 	this.setState({
+	// 		...this.state,
+	// 		busStops: formattedStops,
+	// 	});
+	// };
+
 	componentDidMount() {
-		this.findCoordinates();
+		//this.findCoordinates();
 	}
 
 	parseStops = async stops => {
@@ -117,16 +116,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<View style={styles.container}>
-					<Map
-						region={this.state.location}
-						busStops={this.state.busStops}
-					></Map>
-
-					<Card></Card>
-
-					<View style={styles.navbarContainer}></View>
-				</View>
+				<MainView></MainView>
 			</Provider>
 		);
 	}

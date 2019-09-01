@@ -1,5 +1,6 @@
 import {
 	FETCH_LOCATION,
+	FETCH_STOPS,
 	CREATE_EVENT,
 	FORM_DATA_CHANGED,
 	CLEAR_FORM,
@@ -12,6 +13,7 @@ import {
 	COLLAPSE_CARD_SIZE,
 } from "./ActionTypes";
 import * as Location from "expo-location";
+import { getStopsByLatLong, getStopTimesByStop } from "../../api/index";
 
 function getLocationAsync() {
 	return new Promise((resolve, reject) => {
@@ -29,6 +31,20 @@ export function setDefaultLocation() {
 	return {
 		type: FETCH_LOCATION,
 		payload: getLocationAsync(),
+	};
+}
+
+export function findStopsNearLatLong(lat, long, count) {
+	return {
+		type: FETCH_STOPS,
+		payload: getStopsByLatLong(lat, long, count),
+	};
+}
+
+export function findStopTimesByStopId(stop_id) {
+	return {
+		type: FETCH_STOPS,
+		payload: getStopTimesByStop(stop_id),
 	};
 }
 

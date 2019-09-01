@@ -26,59 +26,67 @@ class StopLabel extends Component {
 	// };
 
 	render() {
-		let { busStop, currentTime } = this.props;
+		let { busStop, currentTime, index } = this.props;
+		console.log("stop name: ", busStop);
 		let busTimes = busStop.busTimes;
 		return (
 			<View style={styles.labelContainer}>
 				<View style={styles.stopInfoContainer}>
 					<View style={styles.stopNumber}>
-						<Text style={styles.stopNumberText}>1</Text>
+						<Text
+							adjustsFontSizeToFit
+							style={styles.stopNumberText}
+						>
+							{index}
+						</Text>
 					</View>
 				</View>
 				<View style={styles.busInfoContainer}>
 					{busStop && (
 						<Text style={{ fontSize: 17, paddingVertical: 5 }}>
-							{busStop.name}
+							{busStop.stop_name}
 						</Text>
 					)}
-					<Grid>
-						<Col style={{ width: "33%" }}>
-							<Row>
-								{busTimes[0] && (
-									<BusTag busInfo={busTimes[0]}></BusTag>
-								)}
-							</Row>
-							<Row>
-								{busTimes[1] && (
-									<BusTag busInfo={busTimes[1]}></BusTag>
-								)}
-							</Row>
-						</Col>
-						<Col style={{ width: "33%" }}>
-							<Row>
-								{busTimes[2] && (
-									<BusTag busInfo={busTimes[2]}></BusTag>
-								)}
-							</Row>
-							<Row>
-								{busTimes[3] && (
-									<BusTag busInfo={busTimes[3]}></BusTag>
-								)}
-							</Row>
-						</Col>
-						<Col style={{ width: "33%" }}>
-							<Row>
-								{busTimes[4] && (
-									<BusTag busInfo={busTimes[4]}></BusTag>
-								)}
-							</Row>
-							<Row>
-								{busTimes[5] && (
-									<BusTag busInfo={busTimes[5]}></BusTag>
-								)}
-							</Row>
-						</Col>
-					</Grid>
+					{busTimes && (
+						<Grid>
+							<Col style={{ width: "33%" }}>
+								<Row>
+									{busTimes[0] && (
+										<BusTag busInfo={busTimes[0]}></BusTag>
+									)}
+								</Row>
+								<Row>
+									{busTimes[1] && (
+										<BusTag busInfo={busTimes[1]}></BusTag>
+									)}
+								</Row>
+							</Col>
+							<Col style={{ width: "33%" }}>
+								<Row>
+									{busTimes[2] && (
+										<BusTag busInfo={busTimes[2]}></BusTag>
+									)}
+								</Row>
+								<Row>
+									{busTimes[3] && (
+										<BusTag busInfo={busTimes[3]}></BusTag>
+									)}
+								</Row>
+							</Col>
+							<Col style={{ width: "33%" }}>
+								<Row>
+									{busTimes[4] && (
+										<BusTag busInfo={busTimes[4]}></BusTag>
+									)}
+								</Row>
+								<Row>
+									{busTimes[5] && (
+										<BusTag busInfo={busTimes[5]}></BusTag>
+									)}
+								</Row>
+							</Col>
+						</Grid>
+					)}
 				</View>
 			</View>
 		);
@@ -110,7 +118,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	stopNumber: {
-		width: "50%",
+		width: "60%",
 		aspectRatio: 1,
 		backgroundColor: "#FF7700",
 		borderRadius: 10,

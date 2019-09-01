@@ -1,12 +1,9 @@
 import { connect } from "react-redux";
-import Card from "../components/Card";
-import { toggleCardSize, expandCardSize } from "../redux/actions";
+import MainView from "../components/MainView";
+import { findStopsNearLatLong, findStopTimesByStopId } from "../redux/actions";
 
 const mapStateToProps = state => ({
-	// location: state.map,
-	// formData: state.formData,
 	busStops: state.busStops.stops,
-	expanded: state.settings.expanded,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -14,12 +11,14 @@ const mapDispatchToProps = dispatch => {
 		// createEvent: newForm => dispatch(createEvent(newForm)),
 		// onFormDataChange: values => dispatch(onFormDataChange(values)),
 		// clearForm: () => dispatch(clearForm()),
-		toggleCardSize: () => dispatch(toggleCardSize()),
-		expandCardSize: () => dispatch(expandCardSize()),
+		findStopsNearLatLong: (lat, long, count = 5) =>
+			dispatch(findStopsNearLatLong(lat, long, count)),
+		findStopTimesByStopId: stop_id =>
+			dispatch(findStopTimesByStopId(stop_id)),
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Card);
+)(MainView);
